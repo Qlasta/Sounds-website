@@ -1,0 +1,96 @@
+<!DOCTYPE html>
+{% import "bootstrap/wtf.html" as wtf %}
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Big Ear</title>
+    <link href="//maxcdn.bootstrapcdn.com/bootstrap/4.1.1/css/bootstrap.min.css" rel="stylesheet" id="bootstrap-css">
+<script src="//maxcdn.bootstrapcdn.com/bootstrap/4.1.1/js/bootstrap.min.js"></script>
+<script src="//cdnjs.cloudflare.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
+    <link rel="stylesheet" href="static/style.css">
+</head>
+<body>
+<div class="container py-5">
+
+    <!-- Top title and logo -->
+    <header class="text-white text-center">
+        <h1 class="display-4">Big Ear</h1>
+        <p class="lead mb-0">Guess random sound!</p>
+        <img src="static/ear.png" alt="" width="150" class="mb-4">
+    </header>
+
+
+    <div class="row py-4 justify-content-center">
+
+            <!-- Generate sound-->
+            <div class="row justify-content-center">
+            <a class="btn btn-light" href="{{ url_for('generate') }}" role="button">Generate sound</a>
+            </div>
+             {% if sound: %}
+            <div class="container container-div">
+                <div class="row justify-content-center">
+                <audio controls autoplay>
+  <source src="static/sounds/{{sound}}" type="audio/mp3">
+                     <source src="static/sounds/{{sound}}" type="audio/wav">
+                    <source src="static/sounds/{{sound}}" type="audio/aiff">
+Your browser does not support the audio element.
+</audio>
+            </div>
+                </div>
+<div class="container container-div">
+        <div class="row justify-content-center">
+        <p class="font-italic text-white text-center">Enter your guess here:</p>
+            </div>
+    </div>
+    <div class="row justify-content-center">
+
+    {{ wtf.quick_form(form,  form_type="inline") }}
+</div>
+
+    {%   else: %}
+
+            {%   endif %}
+</div>
+            <!-- Color result -->
+ {% if tags: %}
+
+    <p class="font-italic text-white text-center">Here are the tags of the sound:</p>
+<div class="row">
+    {% for tag in tags: %}
+    <div class="col text-white text-center text-important">{{ tag }}</div>
+{% endfor %}
+</div>
+
+{% if win==1 %}
+<div class="alert alert-success container-div" role="alert">
+  You are correct!
+</div>
+{%   else: %}
+<div class="alert alert-danger container-div" role="alert">
+  You are wrong!
+</div>
+{% endif %}
+<div class="row">
+
+    <div class="col text-white text-center">{{ descr }}</div>
+
+</div>
+
+  {%   else: %}
+
+
+
+            <!-- Uploaded image area-->
+
+
+
+
+
+
+{% endif %}
+
+    </div>
+
+<script src="static/main.js"></script>
+</body>
+</html>
